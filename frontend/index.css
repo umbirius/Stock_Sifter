@@ -1,0 +1,79 @@
+
+table#tickers {
+    border-collapse: collapse;
+    font-size:12px;
+    width:70%; 
+    margin-left:15%; 
+    margin-right:15%;
+    margin-top:5%;
+    margin-bottom:15%;
+}
+
+table#tickers td, table#tickers th{
+    border: 1px solid #999;
+    padding: 0.5rem;
+    text-align: center;
+    vertical-align: middle;
+    column-width: auto;
+    column-span: 7;
+  
+  }
+
+
+table#filter {
+    border-collapse: collapse;
+    font-size:12px;
+    width:70%; 
+    margin-left:15%; 
+    margin-right:15%;
+    margin-top:5%;
+    margin-bottom:0%;
+  }
+
+  table#filter td, table#filter th{
+    border: 1px solid #999;
+    padding: 0.5rem;
+    text-align: center;
+    vertical-align: middle;
+    width: 12%;
+    column-span: 8;
+
+}
+
+table#set-load-filter {
+    border-collapse: collapse;
+    font-size:12px;
+    width:70%; 
+    margin-left:15%; 
+    margin-right:15%;
+    margin-top:5%;
+    margin-bottom:0%;
+}
+
+table#set-load-filter td, table#set-load-filter th{
+    border: 1px solid #999;
+    padding: 0.5rem;
+    text-align: center;
+    vertical-align: middle;
+    column-width: auto;
+    column-span: 7;
+  
+  }
+
+tr {
+    width: 10%;
+}
+
+select {
+    width: 80px;
+    font-size: 12px;
+}
+
+option {
+    font-size: 10px;
+}
+
+select#load-filter {
+    width: 100%;
+    font-size: 12px;
+}
