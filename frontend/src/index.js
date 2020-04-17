@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   grabStocks();
   createTableHeader(stockTable)
   reset.addEventListener("click", () => {
-    resetFilter()
+    Filter.resetFilter()
     renderByFilter(stocks)
   })
 
@@ -14,6 +14,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
       renderByFilter(Stock.filterStocks(filterParams()))
     })
   }
+  
+  save.addEventListener("click", () => {
+    let filter = new Filter(...filterParams());
+    filter.newfilter();
+  })
   
   
 
@@ -26,6 +31,7 @@ let div = document.getElementById('tickers');
 let stockTable = document.getElementById("tickers");
 let filter = document.getElementById("filter")
 const reset = document.getElementById("reset")
+const save = document.getElementById("save")
 const filterOptions = document.getElementsByClassName("filter-option")
 
 // create table header
@@ -278,17 +284,57 @@ class Filter {
       this.insiderOwn = insiderOwn;
       this.instOwn = instOwn
     }
+
+    static resetFilter() {
+      let searchIds = ['price', 'volume', 'avg-volume', 'rel-volume', 'sector',
+      'market-cap', '52-week-high', '52-week-low', 'insider-own', 'inst-own']
+      for (let id of searchIds) {
+        document.getElementById(id).value = "any"
+      }
+    }
+
+    newfilter() {
+      debugger
+      fetch('http://localhost:3000/filters', {
+        method: "POST",
+        headers:{
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(
+            {
+                filter: {
+                    market_cap: this.marketCap,
+                    sector: this.sector,
+                    last_price: this.price,
+                    fiftytwo_high: this.fiftytwoWeekHigh,
+                    fiftytwo_low: this.fiftytwoWeekLow,
+                    vol: this.vol,
+                    avg_vol: this.avgVolume,
+                    rel_vol: this.relVolume,
+                    insider_own: this.insiderOwn,
+                    inst_own: this.instOwn
+                }
+            }
+        )
+      })
+      // .then(response => resp.json())
+      // .then(function(json) { 
+      //   fetch
+      // })
+
+    }
+
+
+
+    
 }
 
 // Reset Filter 
 
-function resetFilter() {
-  let searchIds = ['price', 'volume', 'avg-volume', 'rel-volume', 'sector',
-  'market-cap', '52-week-high', '52-week-low', 'insider-own', 'inst-own']
-  for (let id of searchIds) {
-    document.getElementById(id).value = "any"
-  }
-}
+
+
+
 
 
 
