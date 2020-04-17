@@ -418,13 +418,43 @@ class Stock {
       }
       
       switch (filter.fiftytwoWeekHigh){
+
         case "any":
           break;
+
+        case "under5":
+          filteredStocks = filteredStocks.filter( stock => stock.last_price <= stock.fiftytwo_high*.95 )
+          break;
+
+        case "under20":
+          filteredStocks = filteredStocks.filter( stock => stock.last_price <= stock.fiftytwo_high*.8 )
+          break;
+
+        case "under50":
+          filteredStocks = filteredStocks.filter( stock => stock.last_price <= stock.fiftytwo_high*.5)
+        break;
+
+        case "under90":
+          filteredStocks = filteredStocks.filter( stock => stock.last_price <= stock.fiftytwo_high*.9 )
+        break;
+
       }
 
       switch (filter.fiftytwoWeekLow){
         case "any":
           break;
+
+        case "over5":
+          break;
+
+        case "over20":
+          break;
+
+        case "over50":
+        break;
+
+        case "over90":
+        break;
       }
 
       switch (filter.insiderOwn){
