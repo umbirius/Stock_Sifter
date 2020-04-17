@@ -314,6 +314,51 @@ class Stock {
       switch (filter.relVolume){
         case "any":
           break;
+
+        case "sub1":
+          filteredStocks = filteredStocks.filter( stock => stock.vol/stock.avg_vol < 1 )
+          break;
+
+        case "sub.75":
+          filteredStocks = filteredStocks.filter( stock => stock.vol/stock.avg_vol < .75)
+          break;
+
+        case "sub.5":
+          filteredStocks = filteredStocks.filter( stock => stock.vol/stock.avg_vol < .5 )
+          break;
+
+        case "sub.25":
+          filteredStocks = filteredStocks.filter( stock => stock.vol/stock.avg_vol < .25 )
+          break;
+
+        case "over.25":
+          filteredStocks = filteredStocks.filter( stock => stock.vol/stock.avg_vol > .25 )
+          break;
+
+        case "over.5":
+          filteredStocks = filteredStocks.filter( stock => stock.vol/stock.avg_vol > .5)
+          break;
+
+        case "over.75":
+          filteredStocks = filteredStocks.filter( stock => stock.vol/stock.avg_vol > .75)
+          break;
+
+        case "over1":
+          filteredStocks = filteredStocks.filter( stock => stock.vol/stock.avg_vol > 1)
+          break;
+
+        case "over2":
+          filteredStocks = filteredStocks.filter( stock => stock.vol/stock.avg_vol > 2 )
+          break;
+
+        case "over5":
+          filteredStocks = filteredStocks.filter( stock => stock.vol/stock.avg_vol > 5 )
+          break;
+
+        case "over10":
+          filteredStocks = filteredStocks.filter( stock => stock.vol/stock.avg_vol > 10 )
+          break;
+
       }
 
       switch (filter.sector){
