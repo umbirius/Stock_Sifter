@@ -368,6 +368,47 @@ class Stock {
         case "basic-materials":
           filteredStocks = filteredStocks.filter( stock => stock.sector === "Basic Materials")
           break;
+      
+        case "communications":
+          filteredStocks = filteredStocks.filter( stock => stock.sector === "Communications")
+          break;
+
+        case "consumer-disc":
+          filteredStocks = filteredStocks.filter( stock => stock.sector === "Consumer Discretionary")
+          break;
+
+        case "consumer-staples":
+          filteredStocks = filteredStocks.filter( stock => stock.sector === "Consumer Staples")
+          break;
+
+        case "energy":
+          filteredStocks = filteredStocks.filter( stock => stock.sector === "Energy")
+          break;
+      
+        case "financial":
+          filteredStocks = filteredStocks.filter( stock => stock.sector === "Financial")
+          break;
+
+        case "healthcare":
+          filteredStocks = filteredStocks.filter( stock => stock.sector === "Healthcare")
+          break;
+          
+        case "industrials":
+          filteredStocks = filteredStocks.filter( stock => stock.sector === "Industrials")
+          break;
+
+        case "IT":
+          filteredStocks = filteredStocks.filter( stock => stock.sector === "Information Technology")
+          break;
+
+        case "real-estate":
+          filteredStocks = filteredStocks.filter( stock => stock.sector === "Real Estate")
+          break;
+          
+        case "utilities":
+          filteredStocks = filteredStocks.filter( stock => stock.sector === "Utilities")
+          break;
+            
       }
 
       switch (filter.marketCap){
