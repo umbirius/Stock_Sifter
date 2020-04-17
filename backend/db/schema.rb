@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_14_185248) do
+ActiveRecord::Schema.define(version: 2020_04_17_013213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,14 +18,14 @@ ActiveRecord::Schema.define(version: 2020_04_14_185248) do
   create_table "filters", force: :cascade do |t|
     t.string "market_cap"
     t.string "sector"
-    t.float "last_price"
-    t.float "fiftytwo_high"
-    t.float "fiftytwo_low"
-    t.integer "vol"
-    t.integer "avg_vol"
-    t.float "rel_vol"
-    t.float "insider_own"
-    t.float "inst_own"
+    t.string "last_price"
+    t.string "fiftytwo_high"
+    t.string "fiftytwo_low"
+    t.string "vol"
+    t.string "avg_vol"
+    t.string "rel_vol"
+    t.string "insider_own"
+    t.string "inst_own"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
