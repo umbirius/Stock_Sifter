@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   save.addEventListener("click", () => {
     let filter = new Filter(...filterParams());
     filter.newfilter();
+    filter.appendFilter();
   })
   
   
@@ -185,15 +186,128 @@ class Stock {
         case "sub50":
           filteredStocks = filteredStocks.filter( stock => stock.last_price < 50)
           break;
+
+        case "over1":
+          filteredStocks = filteredStocks.filter( stock => stock.last_price > 1)
+          break;
+
+        case "over2":
+          filteredStocks = filteredStocks.filter( stock => stock.last_price > 5)
+          break;  
+
+        case "over10":
+          filteredStocks = filteredStocks.filter( stock => stock.last_price > 10)
+          break;
+
+        case "over20":
+          filteredStocks = filteredStocks.filter( stock => stock.last_price > 20)
+          break;
+
+        case "over50":
+          filteredStocks = filteredStocks.filter( stock => stock.last_price > 50)
+          break;
+
+        case "1-to-5":
+          filteredStocks = filteredStocks.filter( stock => stock.last_price >= 1 && stock.last_price < 5)
+          break;
+
+        case "5-to-10":
+          filteredStocks = filteredStocks.filter( stock => stock.last_price >= 5 && stock.last_price < 10)
+          break;  
+
+        case "10-to-20":
+          filteredStocks = filteredStocks.filter( stock => stock.last_price >= 10 && stock.last_price < 20)
+          break;
+
+        case "20-to-50":
+          filteredStocks = filteredStocks.filter( stock => stock.last_price >= 20 && stock.last_price < 50)
+          break;
+
+        case "50-to-100":
+          filteredStocks = filteredStocks.filter( stock => stock.last_price >= 50 && stock.last_price < 100)
+          break;
+
       }
 
       switch (filter.volume) {
         case "any":
           break;
+
+        case "sub100k":
+          filteredStocks = filteredStocks.filter( stock => stock.vol < 100000)
+          break;
+
+        case "sub500k":
+          filteredStocks = filteredStocks.filter( stock => stock.vol < 500000)
+          break;
+
+        case "sub1m":
+          filteredStocks = filteredStocks.filter( stock => stock.vol < 1000000)
+          break;
+
+        case "over100k":
+          filteredStocks = filteredStocks.filter( stock => stock.vol > 100000)
+          break;
+
+        case "over500k":
+          filteredStocks = filteredStocks.filter( stock => stock.vol > 500000)
+          break;
+
+        case "over1m":
+          filteredStocks = filteredStocks.filter( stock => stock.vol > 1000000)
+          break;
+
+        case "over5m":
+          filteredStocks = filteredStocks.filter( stock => stock.vol > 5000000)
+          break;
+
+        case "over10m":
+          filteredStocks = filteredStocks.filter( stock => stock.vol > 10000000)
+          break;
+          
+        case "over20m":
+          filteredStocks = filteredStocks.filter( stock => stock.vol > 20000000)
+          break;
       }
   
       switch (filter.avgVolume) {
         case "any":
+          break;
+
+        case "sub100k":
+          filteredStocks = filteredStocks.filter( stock => stock.avg_vol < 100000)
+          break;
+
+        case "sub500k":
+          filteredStocks = filteredStocks.filter( stock => stock.avg_vol < 500000)
+          break;
+
+        case "sub1m":
+          filteredStocks = filteredStocks.filter( stock => stock.avg_vol < 1000000)
+          break;
+
+        case "over100k":
+          filteredStocks = filteredStocks.filter( stock => stock.avg_vol > 100000)
+          break;
+
+        case "over500k":
+          filteredStocks = filteredStocks.filter( stock => stock.avg_vol > 500000)
+          break;
+
+        case "over1m":
+          filteredStocks = filteredStocks.filter( stock => stock.avg_vol > 1000000)
+          break;
+
+        case "over5m":
+          filteredStocks = filteredStocks.filter( stock => stock.avg_vol > 5000000)
+          break;
+
+        case "over10m":
+          filteredStocks = filteredStocks.filter( stock => stock.avg_vol > 10000000)
+          break;
+          
+        case "over20m":
+          filteredStocks = filteredStocks.filter( stock => stock.avg_vol > 20000000)
           break;
       }
 
@@ -294,7 +408,7 @@ class Filter {
     }
 
     newfilter() {
-      debugger
+
       fetch('http://localhost:3000/filters', {
         method: "POST",
         headers:{
@@ -309,7 +423,7 @@ class Filter {
                     last_price: this.price,
                     fiftytwo_high: this.fiftytwoWeekHigh,
                     fiftytwo_low: this.fiftytwoWeekLow,
-                    vol: this.vol,
+                    vol: this.volume,
                     avg_vol: this.avgVolume,
                     rel_vol: this.relVolume,
                     insider_own: this.insiderOwn,
@@ -318,13 +432,20 @@ class Filter {
             }
         )
       })
-      // .then(response => resp.json())
-      // .then(function(json) { 
-      //   fetch
-      // })
 
     }
 
+    appendFilter() {
+      let filters = document.getElementById("load-filter")
+      let option = document.createElement("option")
+      option.text = `${this.marketCap}+${this.sector}+${this.price}+${this.fiftytwoWeekHigh}+${this.fiftytwoWeekLow}
+        +${this.volume}+${this.avgVolume}+${this.relVolume}+${this.insiderOwn}+${this.instOwn}`
+      filters.appendChild(option)
+      option.value = `${this.marketCap}+${this.sector}+${this.price}+${this.fiftytwoWeekHigh}+${this.fiftytwoWeekLow}
+      +${this.volume}+${this.avgVolume}+${this.relVolume}+${this.insiderOwn}+${this.instOwn}`
+    filters.appendChild(option)
+      filters.value = option.value
+    }
 
 
     
