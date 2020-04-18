@@ -11,6 +11,7 @@ class CreateFilters < ActiveRecord::Migration[5.2]
       t.string :rel_vol 
       t.string :insider_own
       t.string :inst_own
+      t.integer :user_id
       t.timestamps
     end
   end
