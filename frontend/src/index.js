@@ -171,7 +171,7 @@ class Stock {
           filteredStocks = filteredStocks.filter( stock => stock.last_price < 1)
           break;
 
-        case "sub2":
+        case "sub5":
           filteredStocks = filteredStocks.filter( stock => stock.last_price < 5)
           break;  
 
@@ -191,7 +191,7 @@ class Stock {
           filteredStocks = filteredStocks.filter( stock => stock.last_price > 1)
           break;
 
-        case "over2":
+        case "over5":
           filteredStocks = filteredStocks.filter( stock => stock.last_price > 5)
           break;  
 
@@ -441,19 +441,24 @@ class Stock {
       }
 
       switch (filter.fiftytwoWeekLow){
+
         case "any":
           break;
 
         case "over5":
+          filteredStocks = filteredStocks.filter( stock => stock.last_price >= stock.fiftytwo_low*1.05 )
           break;
 
         case "over20":
+          filteredStocks = filteredStocks.filter( stock => stock.last_price >= stock.fiftytwo_low*1.2)
           break;
 
         case "over50":
+          filteredStocks = filteredStocks.filter( stock => stock.last_price >= stock.fiftytwo_low*1.5)
         break;
 
         case "over90":
+          filteredStocks = filteredStocks.filter( stock => stock.last_price >= stock.fiftytwo_low*1.9)
         break;
       }
 
