@@ -551,19 +551,19 @@ class Filter {
         },
         body: JSON.stringify(
             {
-                filter: {
-                    market_cap: this.marketCap,
-                    sector: this.sector,
-                    last_price: this.price,
-                    fiftytwo_high: this.fiftytwoWeekHigh,
-                    fiftytwo_low: this.fiftytwoWeekLow,
-                    vol: this.volume,
-                    avg_vol: this.avgVolume,
-                    rel_vol: this.relVolume,
-                    insider_own: this.insiderOwn,
-                    inst_own: this.instOwn
-                    // user_id: id
-                }
+              filter: {
+                  market_cap: this.marketCap,
+                  sector: this.sector,
+                  last_price: this.price,
+                  fiftytwo_high: this.fiftytwoWeekHigh,
+                  fiftytwo_low: this.fiftytwoWeekLow,
+                  vol: this.volume,
+                  avg_vol: this.avgVolume,
+                  rel_vol: this.relVolume,
+                  insider_own: this.insiderOwn,
+                  inst_own: this.instOwn
+                  // user_id: id
+              }
             }
         )
       })
@@ -593,38 +593,52 @@ class User {
 
 
   static createOrAccessUser(){
-    
+    let form = document.getElementById("user-sign-up-log-in")
     document.querySelector(".popup").style.display = "flex";
 
     document.querySelector(".close").addEventListener("click", () => {
       document.querySelector(".popup").style.display = "none";
     })
 
-    // document.getElementById("user-sign-up-log-in").addEventListener('submit', function(e) {
-    //   e.preventDefault()
-    //   fetch('http://localhost:3000//users', {
-    //     method: "POST",
-    //     headers:{
-    //       "Content-Type": "application/json",
-    //       "Accept": "application/json"
-    //     },
-    //     body: JSON.stringify(
-    //       {
-    //         user: {
-    //           username: e.target
-    //         }
-    //       }
-    //     )
-    //   })
-    // })
+    form.addEventListener("submit", function(e) { 
+      e.preventDefault() 
+      fetch('http://localhost:3000/users', {
+        method: "POST",
+        headers:{
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(
+            {
+              user: {
+                name: e.target.elements[0].value
+              }
+            }
+        )
+      })
+      .then(response => {
+        return response.json()
+      })
+      .then(user => {
+        let newUser = new User(user)
+        console.log(newUser)
+        console.log(user)
+        logInOrSignUp.style.display = "none";
+        //add new user on DOM
+      })
 
-    function openForm() {
-      document.getElementById("popup-Form").style.display="block";
-    }
-    
-    function closeForm() {
-      document.getElementById("popup-Form").style.display="none";
-    }
+      
+
+
+      document.querySelector(".popup").style.display = "none"; 
+    })
+
+    document.getElementById("user-sign-up-log-in").addEventListener('submit', function(e) {
+      e.preventDefault()
+
+    })
+
+
 
   }
 }

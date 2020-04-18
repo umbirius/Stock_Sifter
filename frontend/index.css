@@ -122,3 +122,15 @@ input {
     padding: 8px;
     border: 1px solid gray;
 }
+
+th, td {
+    background-color: #fff;
+}
+
+th:hover, td:hover {
+    background-color: #eee;
+}
+
+button#log-in-or-sign-up{
+    display: flex;
+}
