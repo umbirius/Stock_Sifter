@@ -58,7 +58,7 @@ table#set-load-filter td, table#set-load-filter th{
     column-width: auto;
     column-span: 3;
   
-  }
+}
 
 tr {
     width: 10%;
@@ -76,4 +76,49 @@ option {
 select#load-filter {
     width: 400px;
     font-size: 12px;
+}
+
+.container#userForm h1{
+    text-align: center;
+}
+
+
+.popup{
+    background: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+}
+
+.popup-content{
+    height: 250px;
+    width: 500px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+}
+
+input {
+    margin: 20px auto;
+    display: block;
+    width: 50%;
+    padding: 8px;
+    border: 1px solid gray;
+
+}
+
+.close {
+
+    margin: 20px auto;
+    display: block;
+    width: 50%;
+    padding: 8px;
+    border: 1px solid gray;
 }

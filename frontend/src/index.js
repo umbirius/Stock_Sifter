@@ -2,6 +2,7 @@
 // Load DOM
 document.addEventListener('DOMContentLoaded', (event) => {
   console.log('DOM fully loaded and parsed');
+
   grabStocks();
   createTableHeader(stockTable)
   reset.addEventListener("click", () => {
@@ -20,6 +21,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
     filter.newfilter();
     filter.appendFilter();
   })
+
+  logInOrSignUp.addEventListener("click", () => {
+    User.createOrAccessUser();
+  })
+
+
+
+
+  
+
   
   
 
@@ -30,10 +41,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
 let stocks = []
 let div = document.getElementById('tickers');
 let stockTable = document.getElementById("tickers");
-let filter = document.getElementById("filter")
-const reset = document.getElementById("reset")
-const save = document.getElementById("save")
-const filterOptions = document.getElementsByClassName("filter-option")
+let filter = document.getElementById("filter");
+const reset = document.getElementById("reset");
+const save = document.getElementById("save");
+const filterOptions = document.getElementsByClassName("filter-option");
+const logInOrSignUp = document.getElementById("log-in-or-sign-up");
+
 
 // create table header
 function createTableHeader(table){
@@ -549,6 +562,7 @@ class Filter {
                     rel_vol: this.relVolume,
                     insider_own: this.insiderOwn,
                     inst_own: this.instOwn
+                    // user_id: id
                 }
             }
         )
@@ -571,6 +585,52 @@ class Filter {
 
     
 }
+
+class User {
+  constructor (name) {
+    this.name = name
+  }
+
+
+  static createOrAccessUser(){
+    
+    document.querySelector(".popup").style.display = "flex";
+
+    document.querySelector(".close").addEventListener("click", () => {
+      document.querySelector(".popup").style.display = "none";
+    })
+
+    // document.getElementById("user-sign-up-log-in").addEventListener('submit', function(e) {
+    //   e.preventDefault()
+    //   fetch('http://localhost:3000//users', {
+    //     method: "POST",
+    //     headers:{
+    //       "Content-Type": "application/json",
+    //       "Accept": "application/json"
+    //     },
+    //     body: JSON.stringify(
+    //       {
+    //         user: {
+    //           username: e.target
+    //         }
+    //       }
+    //     )
+    //   })
+    // })
+
+    function openForm() {
+      document.getElementById("popup-Form").style.display="block";
+    }
+    
+    function closeForm() {
+      document.getElementById("popup-Form").style.display="none";
+    }
+
+  }
+}
+
+
+
 
 // Reset Filter 
 
