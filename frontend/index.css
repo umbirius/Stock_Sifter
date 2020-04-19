@@ -134,3 +134,6 @@ th:hover, td:hover {
 button#log-in-or-sign-up{
     display: flex;
 }
+button#log-out{
+    display: none;
+}

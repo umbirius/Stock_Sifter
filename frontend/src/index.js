@@ -26,13 +26,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     User.createOrAccessUser();
   })
 
-
-
-
-  
-
-  
-  
+  logOut.addEventListener("click", () => {
+    logInOrSignUp.style.display = "flex";
+    logOut.style.display = "none"
+  })
 
 });
 
@@ -46,7 +43,7 @@ const reset = document.getElementById("reset");
 const save = document.getElementById("save");
 const filterOptions = document.getElementsByClassName("filter-option");
 const logInOrSignUp = document.getElementById("log-in-or-sign-up");
-
+const logOut = document.getElementById("log-out");
 
 // create table header
 function createTableHeader(table){
@@ -541,7 +538,7 @@ class Filter {
       }
     }
 
-    newfilter() {
+    newfilter(title, id) {
 
       fetch('http://localhost:3000/filters', {
         method: "POST",
@@ -552,6 +549,7 @@ class Filter {
         body: JSON.stringify(
             {
               filter: {
+                  name: title,
                   market_cap: this.marketCap,
                   sector: this.sector,
                   last_price: this.price,
@@ -561,8 +559,8 @@ class Filter {
                   avg_vol: this.avgVolume,
                   rel_vol: this.relVolume,
                   insider_own: this.insiderOwn,
-                  inst_own: this.instOwn
-                  // user_id: id
+                  inst_own: this.instOwn,
+                  user_id: id
               }
             }
         )
@@ -624,13 +622,11 @@ class User {
         console.log(newUser)
         console.log(user)
         logInOrSignUp.style.display = "none";
-        //add new user on DOM
+        document.querySelector(".popup").style.display = "none"; 
+        logOut.style.display = "flex"
+
       })
 
-      
-
-
-      document.querySelector(".popup").style.display = "none"; 
     })
 
     document.getElementById("user-sign-up-log-in").addEventListener('submit', function(e) {
