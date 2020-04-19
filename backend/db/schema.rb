@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_18_185010) do
+ActiveRecord::Schema.define(version: 2020_04_19_175636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "filters", force: :cascade do |t|
+    t.string "name"
     t.string "market_cap"
     t.string "sector"
     t.string "last_price"

@@ -13,8 +13,8 @@ class FiltersController < ApplicationController
     private
 
     def filter_params
-        params.require(:filter).permit(:market_cap, :sector, :last_price, :fiftytwo_high, 
-        :fiftytwo_low, :vol, :avg_vol, :rel_vol, :insider_own, :inst_own)
+        params.require(:filter).permit(:name, :market_cap, :sector, :last_price, :fiftytwo_high, 
+        :fiftytwo_low, :vol, :avg_vol, :rel_vol, :insider_own, :inst_own, :user_id)
     end
 end
 

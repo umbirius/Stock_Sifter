@@ -1,6 +1,7 @@
 class CreateFilters < ActiveRecord::Migration[5.2]
   def change
     create_table :filters do |t|
+      t.string :name
       t.string :market_cap
       t.string :sector
       t.string :last_price
