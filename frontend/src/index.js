@@ -23,9 +23,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     Filter.newfilter(currentUser.id);
   })
 
-  // load.addEventListener("click", () =>  {
-  //   User.filters()
-  // })
+  load.addEventListener("click", () =>  {
+    let desiredFilter = document.getElementById("load-filter")
+    Filter.loadFilter(desiredFilter.selectedOptions[0].id)
+  })
 
   logInOrSignUp.addEventListener("click", () => {
     User.createOrAccessUser();
@@ -625,6 +626,28 @@ class Filter {
 
     }
 
+    static loadFilter(id){
+      fetch('http://localhost:3000/filters')
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          let filterVals = data.data.find(filter => filter.attributes.id == id ).attributes
+          document.getElementById("market-cap").value = filterVals.market_cap
+          document.getElementById("sector").value = filterVals.sector
+          document.getElementById("price").value = filterVals.last_price
+          document.getElementById("52-week-high").value = filterVals.fiftytwo_high
+          document.getElementById("52-week-low").value = filterVals.fiftytwo_low
+          document.getElementById("volume").value = filterVals.vol
+          document.getElementById("avg-volume").value = filterVals.avg_vol
+          document.getElementById("rel-volume").value = filterVals.rel_vol
+          document.getElementById("insider-own").value = filterVals.insider_own
+          document.getElementById("inst-own").value = filterVals.inst_own
+        })
+        .then(() => {
+          renderByFilter(Stock.filterStocks(Filter.filterParams()))
+        });
+    }
 
     
 }
