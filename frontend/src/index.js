@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   grabStocks();
   createTableHeader(stockTable)
-  
+
   reset.addEventListener("click", () => {
     Filter.resetFilter()
     renderByFilter(stocks)
@@ -21,8 +21,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
   
   save.addEventListener("click", () => {
     Filter.newfilter(currentUser.name.id);
-
   })
+
+  // load.addEventListener("click", () =>  {
+  //   User.filters()
+  // })
 
   logInOrSignUp.addEventListener("click", () => {
     User.createOrAccessUser();
@@ -32,6 +35,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     logInOrSignUp.style.display = "flex";
     logOut.style.display = "none"
   })
+
+
 
   
 
@@ -49,7 +54,7 @@ const save = document.getElementById("save");
 const filterOptions = document.getElementsByClassName("filter-option");
 const logInOrSignUp = document.getElementById("log-in-or-sign-up");
 const logOut = document.getElementById("log-out");
-
+const load = document.getElementById("load")
 
 // create table header
 function createTableHeader(table){
@@ -682,6 +687,16 @@ class User {
 
 
 
+  }
+
+  filters() {
+    fetch('http://localhost:3000/filters')
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      data.data.filter (filter => filter.attributes.user_id === this.id)
+    })
   }
 }
 
