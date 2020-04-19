@@ -651,6 +651,7 @@ class User {
 
     form.addEventListener("submit", function(e) { 
       e.preventDefault() 
+      e.stopImmediatePropagation()
       fetch('http://localhost:3000/users', {
         method: "POST",
         headers:{
@@ -680,10 +681,6 @@ class User {
 
     })
 
-    document.getElementById("user-sign-up-log-in").addEventListener('submit', function(e) {
-      e.preventDefault()
-
-    })
 
 
 

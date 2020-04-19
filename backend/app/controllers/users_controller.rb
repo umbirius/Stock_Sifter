@@ -6,10 +6,19 @@ class UsersController < ApplicationController
 
 
     def create 
-        user = User.create(user_params)
-        render json: user
+        if User.find_by(:name => user_params[:name])
+            @user = User.find_by(:name => user_params[:name])
+            redirect_to "/users/#{@user.id}"
+        else
+            @user = User.create(user_params)
+            render json: @user  
+        end
     end 
 
+    def show
+        @user = User.find_by(:id => params[:id].to_i)
+        render json: @user
+    end
 
     private
 
