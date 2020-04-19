@@ -8,17 +8,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
   reset.addEventListener("click", () => {
     Filter.resetFilter()
     renderByFilter(stocks)
+    let filters = document.getElementById("load-filter")
+    filters.value = "none"
   })
 
   for (let option of filterOptions) {
     option.addEventListener("change", () => {
-      renderByFilter(Stock.filterStocks(filterParams()))
+      renderByFilter(Stock.filterStocks(Filter.filterParams()))
     })
   }
   
   save.addEventListener("click", () => {
-    let filter = new Filter(...filterParams());
-    filter.newfilter(currentUser.name.id);
+    Filter.newfilter(currentUser.name.id);
 
   })
 
@@ -173,7 +174,7 @@ class Stock {
     }
 
     static filterStocks(filterParams) {
-      let filter = new Filter(...filterParams)
+      let filter = filterParams
       let filteredStocks = stocks
       switch (filter.price) {
         case "any":
@@ -504,32 +505,46 @@ function alphaSymbol(a, b) {
   return comparison;
 }
 
-// logs active filter values to pass as argument from Filter class
-let filterParams = () => {
-  let searchIds = ['price', 'volume', 'avg-volume', 'rel-volume', 'sector',
-    'market-cap', '52-week-high', '52-week-low', 'insider-own', 'inst-own']
-  let params = [];
-  for (let id of searchIds) {
-    params.push(document.getElementById(id).selectedOptions[0].value)
-    // console.log(id)
-  }
-  return params
-}
 
 // Filter Class
 class Filter {
-  constructor(price, volume, avgVolume, relVolume, sector, marketCap, 
-    fiftytwoWeekHigh, fiftytwoWeekLow, insiderOwn, instOwn) {
-      this.price = price;
-      this.volume = volume;
-      this.avgVolume = avgVolume;
-      this.relVolume = relVolume;
-      this.sector = sector;
-      this.marketCap = marketCap;
-      this.fiftytwoWeekHigh = fiftytwoWeekHigh;
-      this.fiftytwoWeekLow = fiftytwoWeekLow;
-      this.insiderOwn = insiderOwn;
-      this.instOwn = instOwn
+  constructor(filter) {
+      this.id = filter.id;
+      this.name = filter.name;
+      this.price = filter.last_price;
+      this.volume = filter.vol;
+      this.avgVolume = filter.avg_vol;
+      this.relVolume = filter.rel_vol;
+      this.sector = filter.sector;
+      this.marketCap = filter.market_cap;
+      this.fiftytwoWeekHigh = filter.fiftytwo_high;
+      this.fiftytwoWeekLow = filter.fiftytwo_low;
+      this.insiderOwn = filter.insider_own;
+      this.instOwn = filter.inst_own;
+      this.userId = filter.user_id
+    }
+
+    // logs active filter values to pass as argument from Filter class
+    static filterParams() {
+      let searchIds = ['price', 'volume', 'avg-volume', 'rel-volume', 'sector',
+        'market-cap', '52-week-high', '52-week-low', 'insider-own', 'inst-own']
+      let params = []
+      for (let id of searchIds) {
+        params.push(document.getElementById(id).selectedOptions[0].value)
+        // console.log(id)
+      }
+      let formattedParams = new Object
+      formattedParams.price = params[0];
+      formattedParams.volume = params[1];
+      formattedParams.avgVolume = params[2];
+      formattedParams.relVolume = params[3];
+      formattedParams.sector = params[4];
+      formattedParams.marketCap = params[5];
+      formattedParams.fiftytwoWeekHigh = params[6];
+      formattedParams.fiftytwoWeekLow = params[7];
+      formattedParams.insiderOwn = params[8];
+      formattedParams.instOwn = params[9]
+      return formattedParams
     }
 
     static resetFilter() {
@@ -540,8 +555,8 @@ class Filter {
       }
     }
 
-    newfilter(id) {
-      let filter = this 
+    static newfilter(id) {
+      let filterParams = Filter.filterParams()
       let form = document.getElementById("create-filter")
       document.querySelector(".popup-filter").style.display = "flex";
   
@@ -562,16 +577,16 @@ class Filter {
               {
                 filter: {
                     name: e.target.elements[0].value,
-                    market_cap: filter.marketCap,
-                    sector: filter.sector,
-                    last_price: filter.price,
-                    fiftytwo_high: filter.fiftytwoWeekHigh,
-                    fiftytwo_low: filter.fiftytwoWeekLow,
-                    vol: filter.volume,
-                    avg_vol: filter.avgVolume,
-                    rel_vol: filter.relVolume,
-                    insider_own: filter.insiderOwn,
-                    inst_own: filter.instOwn,
+                    market_cap: filterParams.marketCap,
+                    sector: filterParams.sector,
+                    last_price: filterParams.price,
+                    fiftytwo_high: filterParams.fiftytwoWeekHigh,
+                    fiftytwo_low: filterParams.fiftytwoWeekLow,
+                    vol: filterParams.volume,
+                    avg_vol: filterParams.avgVolume,
+                    rel_vol: filterParams.relVolume,
+                    insider_own: filterParams.insiderOwn,
+                    inst_own: filterParams.insiderOwn,
                     user_id: id
                 }
               }
@@ -580,8 +595,11 @@ class Filter {
         .then(response => {
           return response.json()
         })
-        .then( filter => {
-          console.log(filter)
+        .then( function(json) {
+          form.reset()
+          console.log(json)
+          let newFilter = new Filter(json)
+          newFilter.appendFilter()
           document.querySelector(".popup-filter").style.display = "none"; 
         })
         
@@ -591,13 +609,12 @@ class Filter {
     appendFilter() {
       let filters = document.getElementById("load-filter")
       let option = document.createElement("option")
-      option.text = `${this.marketCap}+${this.sector}+${this.price}+${this.fiftytwoWeekHigh}+${this.fiftytwoWeekLow}
-        +${this.volume}+${this.avgVolume}+${this.relVolume}+${this.insiderOwn}+${this.instOwn}`
+      option.text = this.name
+      option.value = this.name.replace(/\s/g, '-')
+      option.setAttribute("id", this.user_id)
       filters.appendChild(option)
-      option.value = `${this.marketCap}+${this.sector}+${this.price}+${this.fiftytwoWeekHigh}+${this.fiftytwoWeekLow}
-      +${this.volume}+${this.avgVolume}+${this.relVolume}+${this.insiderOwn}+${this.instOwn}`
-    filters.appendChild(option)
       filters.value = option.value
+
     }
 
 
