@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 
 let stocks = []
+let currentUser
 let div = document.getElementById('tickers');
 let stockTable = document.getElementById("tickers");
 let filter = document.getElementById("filter");
@@ -44,6 +45,7 @@ const save = document.getElementById("save");
 const filterOptions = document.getElementsByClassName("filter-option");
 const logInOrSignUp = document.getElementById("log-in-or-sign-up");
 const logOut = document.getElementById("log-out");
+
 
 // create table header
 function createTableHeader(table){
@@ -564,6 +566,10 @@ class Filter {
               }
             }
         )
+        // .then(response => {
+        //   return response.json()
+        // })
+        // .then 
       })
 
     }
@@ -589,6 +595,13 @@ class User {
     this.name = name
   }
 
+  static setCurrentUser(user){
+    currentUser = user
+  }
+
+  static currentUser(){
+    return currentUser
+  }
 
   static createOrAccessUser(){
     let form = document.getElementById("user-sign-up-log-in")
@@ -619,12 +632,12 @@ class User {
       })
       .then(user => {
         let newUser = new User(user)
+        User.setCurrentUser(newUser)
         console.log(newUser)
         console.log(user)
         logInOrSignUp.style.display = "none";
         document.querySelector(".popup").style.display = "none"; 
         logOut.style.display = "flex"
-
       })
 
     })
