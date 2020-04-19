@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }
   
   save.addEventListener("click", () => {
-    Filter.newfilter(currentUser.name.id);
+    Filter.newfilter(currentUser.id);
   })
 
   // load.addEventListener("click", () =>  {
@@ -604,6 +604,7 @@ class Filter {
         .then(response => response.json())
         .then( function(json) {
           console.log(json)
+          debugger
           let newFilter = new Filter(json)
           form.reset()
           newFilter.appendFilter()
@@ -618,7 +619,7 @@ class Filter {
       let option = document.createElement("option")
       option.text = this.name
       option.value = this.name.replace(/\s/g, '-')
-      option.setAttribute("id", this.user_id)
+      option.setAttribute("id", this.id )
       filters.appendChild(option)
       filters.value = option.value
 
@@ -629,8 +630,9 @@ class Filter {
 }
 
 class User {
-  constructor (name) {
-    this.name = name
+  constructor (user) {
+    this.name = user.name
+    this.id = user.id
   }
 
   static setCurrentUser(user){
@@ -672,6 +674,7 @@ class User {
       .then(user => {
         let newUser = new User(user)
         User.setCurrentUser(newUser)
+        newUser.loadFilters()
         console.log(newUser)
         console.log(user)
         logInOrSignUp.style.display = "none";
@@ -686,13 +689,23 @@ class User {
 
   }
 
-  filters() {
+  loadFilters() {
     fetch('http://localhost:3000/filters')
     .then((response) => {
       return response.json();
     })
     .then((data) => {
-      data.data.filter (filter => filter.attributes.user_id === this.id)
+      let filterSelection = document.getElementById("load-filter")
+      let userFilters = data.data.filter (filter => filter.attributes.user_id === this.id)
+      for (let filter of userFilters){
+        let option = document.createElement("option")
+        option.value = filter.attributes.name 
+        option.text = filter.attributes.name
+        option.setAttribute("id", filter.attributes.id)
+        filterSelection.appendChild(option)
+       
+      }
+      filterSelection.value = "none"
     })
   }
 }
