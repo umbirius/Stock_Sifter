@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   grabStocks();
   createTableHeader(stockTable)
+  
   reset.addEventListener("click", () => {
     Filter.resetFilter()
     renderByFilter(stocks)
@@ -31,6 +32,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     logInOrSignUp.style.display = "flex";
     logOut.style.display = "none"
   })
+
+  
 
 });
 
@@ -560,12 +563,13 @@ class Filter {
       let form = document.getElementById("create-filter")
       document.querySelector(".popup-filter").style.display = "flex";
   
-      document.querySelector(".close").addEventListener("click", () => {
+      document.querySelector("body > div.popup-filter > div > button").addEventListener("click", () => {
         document.querySelector(".popup-filter").style.display = "none";
       })
 
       form.addEventListener("submit", function(e) { 
         e.preventDefault() 
+        e.stopImmediatePropagation()
 
         fetch('http://localhost:3000/filters', {
           method: "POST",
@@ -592,13 +596,11 @@ class Filter {
               }
           )
         })
-        .then(response => {
-          return response.json()
-        })
+        .then(response => response.json())
         .then( function(json) {
-          form.reset()
           console.log(json)
           let newFilter = new Filter(json)
+          form.reset()
           newFilter.appendFilter()
           document.querySelector(".popup-filter").style.display = "none"; 
         })
