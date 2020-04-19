@@ -83,7 +83,7 @@ select#load-filter {
 }
 
 
-.popup{
+.popup-filter, .popup-user{
     background: rgba(0, 0, 0, 0.6);
     width: 100%;
     height: 100%;

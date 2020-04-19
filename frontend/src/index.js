@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
   
   save.addEventListener("click", () => {
     let filter = new Filter(...filterParams());
-    filter.newfilter();
-    filter.appendFilter();
+    filter.newfilter(currentUser.name.id);
+
   })
 
   logInOrSignUp.addEventListener("click", () => {
@@ -540,38 +540,52 @@ class Filter {
       }
     }
 
-    newfilter(title, id) {
-
-      fetch('http://localhost:3000/filters', {
-        method: "POST",
-        headers:{
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        body: JSON.stringify(
-            {
-              filter: {
-                  name: title,
-                  market_cap: this.marketCap,
-                  sector: this.sector,
-                  last_price: this.price,
-                  fiftytwo_high: this.fiftytwoWeekHigh,
-                  fiftytwo_low: this.fiftytwoWeekLow,
-                  vol: this.volume,
-                  avg_vol: this.avgVolume,
-                  rel_vol: this.relVolume,
-                  insider_own: this.insiderOwn,
-                  inst_own: this.instOwn,
-                  user_id: id
-              }
-            }
-        )
-        // .then(response => {
-        //   return response.json()
-        // })
-        // .then 
+    newfilter(id) {
+      let filter = this 
+      let form = document.getElementById("create-filter")
+      document.querySelector(".popup-filter").style.display = "flex";
+  
+      document.querySelector(".close").addEventListener("click", () => {
+        document.querySelector(".popup-filter").style.display = "none";
       })
 
+      form.addEventListener("submit", function(e) { 
+        e.preventDefault() 
+
+        fetch('http://localhost:3000/filters', {
+          method: "POST",
+          headers:{
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+          },
+          body: JSON.stringify(
+              {
+                filter: {
+                    name: e.target.elements[0].value,
+                    market_cap: filter.marketCap,
+                    sector: filter.sector,
+                    last_price: filter.price,
+                    fiftytwo_high: filter.fiftytwoWeekHigh,
+                    fiftytwo_low: filter.fiftytwoWeekLow,
+                    vol: filter.volume,
+                    avg_vol: filter.avgVolume,
+                    rel_vol: filter.relVolume,
+                    insider_own: filter.insiderOwn,
+                    inst_own: filter.instOwn,
+                    user_id: id
+                }
+              }
+          )
+        })
+        .then(response => {
+          return response.json()
+        })
+        .then( filter => {
+          console.log(filter)
+          document.querySelector(".popup-filter").style.display = "none"; 
+        })
+        
+      })
     }
 
     appendFilter() {
@@ -605,10 +619,10 @@ class User {
 
   static createOrAccessUser(){
     let form = document.getElementById("user-sign-up-log-in")
-    document.querySelector(".popup").style.display = "flex";
+    document.querySelector(".popup-user").style.display = "flex";
 
     document.querySelector(".close").addEventListener("click", () => {
-      document.querySelector(".popup").style.display = "none";
+      document.querySelector(".popup-user").style.display = "none";
     })
 
     form.addEventListener("submit", function(e) { 
@@ -636,7 +650,7 @@ class User {
         console.log(newUser)
         console.log(user)
         logInOrSignUp.style.display = "none";
-        document.querySelector(".popup").style.display = "none"; 
+        document.querySelector(".popup-user").style.display = "none"; 
         logOut.style.display = "flex"
       })
 
