@@ -33,8 +33,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   })
 
   logOut.addEventListener("click", () => {
-    logInOrSignUp.style.display = "flex";
-    logOut.style.display = "none"
+    User.logOut();
   })
 
 
@@ -704,12 +703,37 @@ class User {
         document.querySelector(".popup-user").style.display = "none"; 
         logOut.style.display = "flex"
       })
+      .then( () => {
+    
+        let filterLoadTable = document.getElementById("set-load-filter")
+        let thead = filterLoadTable.createTHead();
+        let row = thead.insertRow()
+        let h4 = document.createElement("h4") 
+        h4.innerHTML = `  Current User: ${currentUser.name}`
+        row.appendChild(h4)
+
+      })
 
     })
 
 
 
 
+  }
+
+  static logOut(){
+    currentUser = undefined
+    logInOrSignUp.style.display = "flex";
+    logOut.style.display = "none"
+    let userDisplay = document.querySelector("#set-load-filter > thead")
+    userDisplay.remove()
+    let loadOptions = document.querySelector("#load-filter")
+    loadOptions.options.length = 0
+    let option = document.createElement("option")
+    loadOptions.appendChild(option)
+    option.value ="none"
+    option.text = "None"
+  
   }
 
   loadFilters() {
