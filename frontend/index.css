@@ -1,63 +1,58 @@
-
 table#tickers {
     border-collapse: collapse;
-    font-size:12px;
-    width:70%; 
-    margin-left:15%; 
-    margin-right:15%;
-    margin-top:5%;
-    margin-bottom:15%;
+    font-size: 12px;
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-top: 5%;
+    margin-bottom: 15%;
 }
 
-table#tickers td, table#tickers th{
+table#tickers td, table#tickers th {
     border: 1px solid #999;
     padding: 0.5rem;
     text-align: center;
     vertical-align: middle;
     column-width: auto;
     column-span: 7;
-  
-  }
-
+}
 
 table#filter {
     border-collapse: collapse;
-    font-size:12px;
-    width:70%; 
-    margin-left:15%; 
-    margin-right:15%;
-    margin-top:5%;
-    margin-bottom:0%;
-  }
+    font-size: 12px;
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-top: 5%;
+    margin-bottom: 0%;
+}
 
-  table#filter td, table#filter th{
+table#filter td, table#filter th {
     border: 1px solid #999;
     padding: 0.5rem;
     text-align: center;
     vertical-align: middle;
     width: 12%;
     column-span: 8;
-
 }
 
 table#set-load-filter {
     border-collapse: collapse;
-    font-size:12px;
-    width:70%; 
-    margin-left:15%; 
-    margin-right:15%;
-    margin-top:5%;
-    margin-bottom:0%;
+    font-size: 12px;
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-top: 5%;
+    margin-bottom: 0%;
 }
 
-table#set-load-filter td, table#set-load-filter th{
+table#set-load-filter td, table#set-load-filter th {
     border: 1px solid #999;
     padding: 0.5rem;
     text-align: center;
     vertical-align: middle;
     column-width: auto;
     column-span: 3;
-  
 }
 
 tr {
@@ -78,12 +73,11 @@ select#load-filter {
     font-size: 12px;
 }
 
-h1{
+h1 {
     text-align: center;
 }
 
-
-.popup-filter, .popup-user{
+.popup-filter, .popup-user {
     background: rgba(0, 0, 0, 0.6);
     width: 100%;
     height: 100%;
@@ -93,10 +87,9 @@ h1{
     justify-content: center;
     align-items: center;
     text-align: center;
-
 }
 
-.popup-content{
+.popup-content {
     height: 250px;
     width: 500px;
     background: #fff;
@@ -111,11 +104,9 @@ input {
     width: 50%;
     padding: 8px;
     border: 1px solid gray;
-
 }
 
 .close {
-
     margin: 20px auto;
     display: block;
     width: 50%;
@@ -131,9 +122,10 @@ th:hover, td:hover {
     background-color: #eee;
 }
 
-button#log-in-or-sign-up{
+button#log-in-or-sign-up {
     display: flex;
 }
-button#log-out{
+
+button#log-out {
     display: none;
 }
