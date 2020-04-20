@@ -1,15 +1,18 @@
+body {
+    background-color: #162e00;
+    background-image: url("https://www.transparenttextures.com/patterns/3px-tile.png");
+    font-family: 'Fjalla One';      
+}
+
 table#tickers {
     border-collapse: collapse;
     font-size: 12px;
-    width: 70%;
-    margin-left: 15%;
-    margin-right: 15%;
-    margin-top: 5%;
-    margin-bottom: 15%;
+    width: 100%;
+
+
 }
 
 table#tickers td, table#tickers th {
-    border: 1px solid #999;
     padding: 0.5rem;
     text-align: center;
     vertical-align: middle;
@@ -20,15 +23,11 @@ table#tickers td, table#tickers th {
 table#filter {
     border-collapse: collapse;
     font-size: 12px;
-    width: 70%;
-    margin-left: 15%;
-    margin-right: 15%;
-    margin-top: 5%;
-    margin-bottom: 0%;
+    width: 100%;
+
 }
 
 table#filter td, table#filter th {
-    border: 1px solid #999;
     padding: 0.5rem;
     text-align: center;
     vertical-align: middle;
@@ -39,15 +38,11 @@ table#filter td, table#filter th {
 table#set-load-filter {
     border-collapse: collapse;
     font-size: 12px;
-    width: 70%;
-    margin-left: 15%;
-    margin-right: 15%;
-    margin-top: 5%;
-    margin-bottom: 0%;
+    width: 100%;
+
 }
 
 table#set-load-filter td, table#set-load-filter th {
-    border: 1px solid #999;
     padding: 0.5rem;
     text-align: center;
     vertical-align: middle;
@@ -73,8 +68,15 @@ select#load-filter {
     font-size: 12px;
 }
 
-h1 {
-    text-align: center;
+h1 { 
+    color: #ececcd; 
+    /* font-family: 'Raleway',sans-serif;  */
+    font-size: 40px; 
+    font-weight: 800; 
+    line-height: 72px; 
+    margin: 0 0 24px;
+    text-align: center; 
+
 }
 
 .popup-filter, .popup-user {
@@ -90,20 +92,22 @@ h1 {
 }
 
 .popup-content {
-    height: 250px;
-    width: 500px;
-    background: #fff;
+    height: 200px;
+    width: 400px;
+    background-color: #162e00;
+    background-image: url("https://www.transparenttextures.com/patterns/3px-tile.png");
+    border: 2px solid rgb(253, 73, 253);
     padding: 20px;
     border-radius: 5px;
     position: relative;
 }
 
 input {
+    border-radius: 5px;
     margin: 20px auto;
     display: block;
     width: 50%;
     padding: 8px;
-    border: 1px solid gray;
 }
 
 .close {
@@ -111,16 +115,27 @@ input {
     display: block;
     width: 50%;
     padding: 8px;
-    border: 1px solid gray;
+    border-radius: 5px;
 }
 
-th, td {
-    background-color: #fff;
+th{
+    background-color: rgb(46, 63, 38);
+    color: white
+}
+td {
+    background-color: rgb(229, 240, 222);
 }
 
-th:hover, td:hover {
-    background-color: #eee;
+#tickers tbody tr:hover td {
+    background-color: rgb(216, 236, 216);
+    color: rgb(241, 64, 233);
+    font-weight: bold;
+  }
+
+#tickers tr:nth-child(odd) td {
+    background: #b0caa8;
 }
+
 
 button#log-in-or-sign-up {
     display: flex;
@@ -129,3 +144,24 @@ button#log-in-or-sign-up {
 button#log-out {
     display: none;
 }
+
+
+.sub-main {
+    vertical-align: center;
+    background-color: rgb(241, 240, 175);
+    margin-top: 20pt;
+    margin-bottom: 20pt;
+    margin-left: 20%;
+    margin-right: 20%;
+    border-radius: 5pt;
+    border-spacing: 10px;
+    padding: 20pt
+    
+
+}
+
+table, td, th{
+    border: 1px solid rgb(17, 44, 17)
+}
+
+
