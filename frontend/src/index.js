@@ -49,12 +49,17 @@ let currentUser
 let div = document.getElementById('tickers');
 let stockTable = document.getElementById("tickers");
 let filter = document.getElementById("filter");
-const reset = document.getElementById("reset");
-const save = document.getElementById("save");
+
+
 const filterOptions = document.getElementsByClassName("filter-option");
 const logInOrSignUp = document.getElementById("log-in-or-sign-up");
 const logOut = document.getElementById("log-out");
+
+const reset = document.getElementById("reset");
+const save = document.getElementById("save");
 const load = document.getElementById("load")
+const load = document.getElementById("delete")
+
 
 // create table header
 function createTableHeader(table){
@@ -604,7 +609,6 @@ class Filter {
         .then(response => response.json())
         .then( function(json) {
           console.log(json)
-          debugger
           let newFilter = new Filter(json)
           form.reset()
           newFilter.appendFilter()
