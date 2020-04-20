@@ -9,6 +9,10 @@ class FiltersController < ApplicationController
         render json: @filter
     end 
 
+    def destroy
+        @filter = Filter.find_by(id: params[:id]).destroy
+        render json: @filter
+    end
 
     private
 

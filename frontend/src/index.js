@@ -19,6 +19,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
     })
   }
   
+  logInOrSignUp.addEventListener("click", () => {
+    User.createOrAccessUser();
+  })
+
+  logOut.addEventListener("click", () => {
+    User.logOut();
+  })
+
   save.addEventListener("click", () => {
     Filter.newfilter(currentUser.id);
   })
@@ -28,14 +36,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     Filter.loadFilter(desiredFilter.selectedOptions[0].id)
   })
 
-  logInOrSignUp.addEventListener("click", () => {
-    User.createOrAccessUser();
+  deleteBtn.addEventListener('click', () => {
+    Filter.deleteFilter();
   })
-
-  logOut.addEventListener("click", () => {
-    User.logOut();
-  })
-
 
 
   
@@ -57,8 +60,8 @@ const logOut = document.getElementById("log-out");
 
 const reset = document.getElementById("reset");
 const save = document.getElementById("save");
-const load = document.getElementById("load")
-const load = document.getElementById("delete")
+const load = document.getElementById("load");
+const deleteBtn = document.getElementById("delete");
 
 
 // create table header
@@ -652,6 +655,14 @@ class Filter {
         });
     }
 
+    static deleteFilter(){
+      let loadOptions = document.querySelector("#load-filter");
+
+      fetch(`http://localhost:3000/filters/${loadOptions.selectedOptions[0].id}`, {
+        method: "DELETE"
+      })
+        loadOptions.remove(loadOptions.selectedIndex);
+      }
     
 }
 
