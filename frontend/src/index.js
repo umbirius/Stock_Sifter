@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 
-let page = 1;
+
 let stocks = []
 let currentUser
 let div = document.getElementById('tickers');
@@ -94,9 +94,9 @@ function createTableHeader(table) {
 function renderTableRows(stocks) {
   let tbody
   if (!!(document.querySelector("#tickers > tbody"))) {
-    tbody = document.querySelector("#tickers > tbody")
-    let newTbody = document.createElement("tbody")
-    tbody.parentNode.replaceChild(newTbody, tbody)
+    oldTbody = document.querySelector("#tickers > tbody")
+    tbody = document.createElement("tbody")
+    oldTbody.parentNode.replaceChild(tbody, oldTbody)
   } else {
     tbody = document.createElement('tbody');
     // let tfooter = table.createTFoot()
@@ -120,11 +120,12 @@ function renderTableRows(stocks) {
       cell.appendChild(text);
     }
   }
-
+    page = 1
     let backBtn
     let nextBtn
-    let length
-  if (!(document.getElementById("next")) && !(document.getElementById("back"))){
+    let pages = Math.ceil(document.querySelectorAll("#tickers > tbody > tr").length / 10)
+
+  if (!(document.getElementById('back')) && !(document.getElementById("next"))){
     backBtn = document.createElement("button")
     backBtn.setAttribute("id", "back")
     backBtn.innerText = "Last Page"
@@ -133,15 +134,21 @@ function renderTableRows(stocks) {
     nextBtn.setAttribute("id", "next")
     nextBtn.innerText = "Next Page"
     document.querySelector("#tickers").appendChild(nextBtn)
-    length = document.querySelectorAll("#tickers > tbody > tr").length
+  } else {
+    backBtn = document.getElementById('back')
+    nextBtn = document.getElementById("next")
+  }
+  
     backBtn.disabled = true
-    if (Math.ceil(length % 10) == 1) {
+    nextBtn.disabled = false
+
+    if (pages == 1) {
       nextBtn.disabled = true
     }
   
     backBtn.addEventListener('click', () => {
       event.stopImmediatePropagation()
-      if (page > 1) {
+      if (page <= pages) {
   
         let currentPage = document.querySelectorAll(`.page${page}`)
         for (item of currentPage) {
@@ -152,16 +159,20 @@ function renderTableRows(stocks) {
         for (item of backPage) {
           item.style.display = "table-row"
         }
-        if (page < Math.ceil(length % 10)) {
-          nextBtn.disabled = false
-        }
         page--
       }
+      if (page == 1) {
+        backBtn.disabled = true
+      } else if (page < pages){
+        nextBtn.disabled = false
+      }
+      console.log(`${page} of ${pages}`)
+
     })
   
     nextBtn.addEventListener('click', () => {
       event.stopImmediatePropagation()
-      if (page < 5) {
+      if (page < pages) {
         let currentPage = document.querySelectorAll(`.page${page}`)
         for (item of currentPage) {
           item.style.display = "none"
@@ -171,16 +182,16 @@ function renderTableRows(stocks) {
         for (item of nextPage) {
           item.style.display = "table-row"
         }
-        if (page > 1) {
-          backBtn.disabled = false
-        }
-        if (page > 4) {
-          nextBtn.disabled = true
-        }
         page++
       }
+      if (page == pages) {
+        nextBtn.disabled = true
+      } else if (page > 1) {
+        backBtn.disabled = false
+      }
+      console.log(`${page} of ${pages}`)
     })
-  }
+  
 
 
 }
