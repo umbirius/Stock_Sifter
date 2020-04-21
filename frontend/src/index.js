@@ -62,8 +62,11 @@ const logOut = document.getElementById("log-out");
 
 const reset = document.getElementById("reset");
 const save = document.getElementById("save");
+save.disabled = true
 const load = document.getElementById("load");
+load.disabled = true
 const deleteBtn = document.getElementById("delete");
+deleteBtn.disabled = true
 
 
 // back.addEventListener('click', () => {
@@ -120,7 +123,9 @@ function renderTableRows(stocks) {
       cell.appendChild(text);
     }
   }
-    page = 1
+    let results = document.querySelector("#results")
+    results.innerHTML = `${document.querySelectorAll("#tickers > tbody > tr").length} Results`
+    let page = 1
     let backBtn
     let nextBtn
     let pages = Math.ceil(document.querySelectorAll("#tickers > tbody > tr").length / 10)
@@ -129,11 +134,11 @@ function renderTableRows(stocks) {
     backBtn = document.createElement("button")
     backBtn.setAttribute("id", "back")
     backBtn.innerText = "Last Page"
-    document.querySelector("#tickers").appendChild(backBtn)
+    document.querySelector("#ticker-section").appendChild(backBtn)
     nextBtn = document.createElement("button")
     nextBtn.setAttribute("id", "next")
     nextBtn.innerText = "Next Page"
-    document.querySelector("#tickers").appendChild(nextBtn)
+    document.querySelector("#ticker-section").appendChild(nextBtn)
   } else {
     backBtn = document.getElementById('back')
     nextBtn = document.getElementById("next")
@@ -142,7 +147,7 @@ function renderTableRows(stocks) {
     backBtn.disabled = true
     nextBtn.disabled = false
 
-    if (pages == 1) {
+    if (pages <= 1) {
       nextBtn.disabled = true
     }
   
@@ -769,14 +774,12 @@ class User {
           logOut.style.display = "flex"
         })
         .then(() => {
-
-          let filterLoadTable = document.getElementById("set-load-filter")
-          let thead = filterLoadTable.createTHead();
-          let row = thead.insertRow()
-          let h4 = document.createElement("h4")
-          h4.innerHTML = `  Current User: ${currentUser.name}`
-          row.appendChild(h4)
-
+          let div = document.querySelector("#user")
+          div.innerHTML = `  Current User: ${currentUser.name}`
+          document.querySelector("#filter-loader > h5").prepend(h5)
+          load.disabled = false 
+          save.disabled = false
+          deleteBtn.disabled = false
         })
 
     })
@@ -787,6 +790,8 @@ class User {
   }
 
   static logOut() {
+    let div = document.querySelector("#user")
+    div.innerHTML = ""
     currentUser = undefined
     logInOrSignUp.style.display = "flex";
     logOut.style.display = "none"
@@ -798,7 +803,7 @@ class User {
     loadOptions.appendChild(option)
     option.value = "none"
     option.text = "None"
-
+    document.querySelector("#filter-loader > h5").remove()
   }
 
   loadFilters() {

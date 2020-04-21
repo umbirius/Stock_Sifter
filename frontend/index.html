@@ -15,12 +15,14 @@
     <container id="header">
       <button type="button" id="log-in-or-sign-up">Log In or Sign Up</button>
       <button type="button" id="log-out">Log Out</button>
-    </container>ß
+    </container>
     <container id="page-header">
       <h1> Stock Sifter
       </h1>
     </container>
-    <div class="sub-main">
+    <div class="sub-main" id="filter-loader">
+      <div id="user">
+      </div>
       <table id="set-load-filter">
         <tr>
           <td>
@@ -42,7 +44,7 @@
       </table>
     </div>
 
-    <div class="sub-main">
+    <div class="sub-main" >
       <table id="filter">
         <tr>
           <td>
@@ -240,7 +242,9 @@
         </tr>
       </table>
     </div>
-    <div class="sub-main">
+    <div class="sub-main" id ="ticker-section">
+      <div id="results">
+      </div>
       <table id="tickers">
       </table>
     </div>
