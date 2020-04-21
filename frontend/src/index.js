@@ -43,10 +43,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 
 
+
+
 });
 
 
-
+let page = 1;
 let stocks = []
 let currentUser
 let div = document.getElementById('tickers');
@@ -62,6 +64,12 @@ const reset = document.getElementById("reset");
 const save = document.getElementById("save");
 const load = document.getElementById("load");
 const deleteBtn = document.getElementById("delete");
+
+
+// back.addEventListener('click', () => {
+
+// })
+
 
 
 // create table header
@@ -88,9 +96,13 @@ function createTableRows(table, stocks) {
   table.appendChild(tbody);
 
   for (let i = 0; i < stocks.length; i++) {
+    let j = Math.floor(i / 10) + 1
+
     let stock = (({ symbol, sector, market_cap, last_price, vol, avg_vol }) =>
       ({ symbol, sector, market_cap, last_price, vol, avg_vol }))(stocks[i])
+
     let row = tbody.insertRow();
+    row.setAttribute("class", `page${j}`)
     let cell = row.insertCell();
     let text = document.createTextNode(i + 1);
     cell.appendChild(text);
@@ -100,28 +112,66 @@ function createTableRows(table, stocks) {
       cell.appendChild(text);
     }
   }
-}
+  let backBtn = document.createElement("button")
+  backBtn.setAttribute("id", "back")
+  backBtn.innerText = "Last Page"
+  document.querySelector("#tickers").appendChild(backBtn)
+  let nextBtn = document.createElement("button")
+  nextBtn.setAttribute("id", "next")
+  nextBtn.innerText = "Next Page"
+  document.querySelector("#tickers").appendChild(nextBtn)
+  let length = document.querySelectorAll("#tickers > tbody > tr").length
+  backBtn.disabled = true
 
-function renderTableRows(table, stocks) {
-  let tbody = document.createElement('tbody');
-  // let tfooter = table.createTFoot()
-  table.appendChild(tbody);
-
-  for (let i = 0; i < stocks.length; i++) {
-    let stock = (({ symbol, sector, market_cap, last_price, vol, avg_vol }) =>
-      ({ symbol, sector, market_cap, last_price, vol, avg_vol }))(stocks[i])
-    let row = tbody.insertRow();
-    let cell = row.insertCell();
-    let text = document.createTextNode(i + 1);
-    cell.appendChild(text);
-    for (key in stock) {
-      let cell = row.insertCell();
-      let text = document.createTextNode(stock[key]);
-      cell.appendChild(text);
-    }
+  if (Math.ceil(length % 10) == 1){
+    nextBtn.disabled = true
   }
+ 
+
+  backBtn.addEventListener('click', () => {
+    if (page > 1) {
+      
+      let currentPage = document.querySelectorAll(`.page${page}`)
+      for (item of currentPage) {
+        item.style.display = "none"
+      }
+
+      let backPage = document.querySelectorAll(`.page${page - 1}`)
+      for (item of backPage) {
+        item.style.display = "table-row"
+      }
+      if (page < Math.ceil(length % 10)){
+        nextBtn.disabled = false
+      }
+      page--
+    }
+  })
+
+
+  nextBtn.addEventListener('click', () => {
+    if (page < 5) {
+      let currentPage = document.querySelectorAll(`.page${page}`)
+      for (item of currentPage) {
+        item.style.display = "none"
+      }
+
+      let nextPage = document.querySelectorAll(`.page${page + 1}`)
+      for (item of nextPage) {
+        item.style.display = "table-row"
+      }
+      if (page > 1 ){
+        backBtn.disabled = false
+      }
+      if (page > 4){
+        nextBtn.disabled = true
+      }
+      page++
+    }
+  })
 
 }
+
+
 
 
 // Render by active Filter
@@ -131,11 +181,13 @@ function renderByFilter(stocks) {
   let oldTbody = document.querySelector("#tickers > tbody")
   let newTbody = document.createElement("tbody")
   oldTbody.parentNode.replaceChild(newTbody, oldTbody)
-
+  
   for (let i = 0; i < stocks.length; i++) {
+    let j = Math.floor(i / 10) + 1
     let stock = (({ symbol, sector, market_cap, last_price, vol, avg_vol }) =>
       ({ symbol, sector, market_cap, last_price, vol, avg_vol }))(stocks[i])
     let row = newTbody.insertRow();
+    row.setAttribute("class", `page${j}`)
     let cell = row.insertCell();
     let text = document.createTextNode(i + 1);
     cell.appendChild(text);
@@ -145,7 +197,15 @@ function renderByFilter(stocks) {
       cell.appendChild(text);
     }
   }
+
+  let length = document.querySelectorAll("#tickers > tbody > tr").length
+  if (Math.ceil(length % 10) == 1){
+    nextBtn.disabled = true
+  }
+
+
 }
+
 
 function grabStocks() {
   fetch('http://localhost:3000/stocks')
@@ -576,7 +636,7 @@ class Filter {
     let form = document.getElementById("create-filter")
     document.querySelector(".popup-filter").style.display = "flex";
 
-    document.querySelector("body > div.popup-filter > div > button").addEventListener("click", () => {
+    document.querySelector("#close-filter").addEventListener("click", () => {
       document.querySelector(".popup-filter").style.display = "none";
     })
 

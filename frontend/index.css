@@ -127,13 +127,13 @@ td {
 }
 
 #tickers tbody tr:hover td {
-    background-color: rgb(216, 236, 216);
+    background-color: rgb(248, 253, 216);
     color: rgb(241, 64, 233);
-    font-weight: bold;
+
   }
 
 #tickers tr:nth-child(odd) td {
-    background: #b0caa8;
+    background: #f1f7eb;
 }
 
 
@@ -163,5 +163,10 @@ button#log-out {
 table, td, th{
     border: 1px solid rgb(17, 44, 17)
 }
+
+.page2, .page3, .page4, .page5 {
+    display: none;
+}
+
 
 
