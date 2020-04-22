@@ -133,14 +133,18 @@ function renderTableRows(stocks) {
     let pages = Math.ceil(document.querySelectorAll("#tickers > tbody > tr").length / 10)
 
   if (!(document.getElementById('back')) && !(document.getElementById("next"))){
+    let div = document.createElement('div')
+    div.setAttribute("id", "scroll-pages")
     backBtn = document.createElement("button")
     backBtn.setAttribute("id", "back")
     backBtn.innerText = "Last Page"
-    document.querySelector("#ticker-section").appendChild(backBtn)
+    document.querySelector("#ticker-section").appendChild(div)
+    div.appendChild(backBtn)
     nextBtn = document.createElement("button")
     nextBtn.setAttribute("id", "next")
     nextBtn.innerText = "Next Page"
-    document.querySelector("#ticker-section").appendChild(nextBtn)
+    document.querySelector("#ticker-section").appendChild(div)
+    div.appendChild(nextBtn)
   } else {
     backBtn = document.getElementById('back')
     nextBtn = document.getElementById("next")

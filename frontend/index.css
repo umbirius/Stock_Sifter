@@ -1,7 +1,9 @@
 body {
-    background-color: #162e00;
-    background-image: url("https://www.transparenttextures.com/patterns/3px-tile.png");
-    font-family: 'Fjalla One';
+    background-color: #e4edf8;
+    /* background-image: url("https://www.transparenttextures.com/patterns/3px-tile.png"); */
+    /* font-family: 'Fjalla One'; */
+    color: rgb(93, 136, 156);
+    font-family: 'Julius Sans One', sans-serif;
 }
 
 table#tickers {
@@ -16,6 +18,7 @@ table#tickers td, table#tickers th {
     vertical-align: middle;
     column-width: auto;
     column-span: 7;
+    border: 2px solid rgb(227, 238, 241);
 }
 
 table#filter {
@@ -55,6 +58,10 @@ select {
     font-size: 12px;
 }
 
+select:hover {
+    cursor: pointer;
+}
+
 option {
     font-size: 10px;
 }
@@ -65,13 +72,14 @@ select#load-filter {
 }
 
 h1 {
-    color: #ececcd;
-    /* font-family: 'Raleway',sans-serif;  */
-    font-size: 40px;
-    font-weight: 800;
+    color: #ffffff;
+    font-family: 'Rouge Script', cursive;
+    font-size: 100px;
+    font-weight: normal;
     line-height: 72px;
-    margin: 0 0 24px;
+    margin: 0 0 50px;
     text-align: center;
+    text-shadow: 3px 3px 2px #e0562b;
 }
 
 .popup-filter, .popup-user {
@@ -114,21 +122,20 @@ input {
 }
 
 th {
-    background-color: rgb(46, 63, 38);
-    color: white
+    background-color: rgb(189, 209, 224);
 }
 
 td {
-    background-color: rgb(229, 240, 222);
+    background-color: #f6fafa;
 }
 
 #tickers tbody tr:hover td {
-    background-color: rgb(248, 253, 216);
-    color: rgb(241, 64, 233);
+    background-color: #e7f3f3;
+    color: rgb(248, 87, 38);
 }
 
 #tickers tr:nth-child(odd) td {
-    background: #f1f7eb;
+    background: #f5f7f7;
 }
 
 button#log-in-or-sign-up {
@@ -141,18 +148,14 @@ button#log-out {
 
 .sub-main {
     vertical-align: center;
-    background-color: rgb(241, 240, 175);
+    background-color: rgb(57, 97, 114);
     margin-top: 20pt;
     margin-bottom: 20pt;
     margin-left: 20%;
     margin-right: 20%;
-    border-radius: 5pt;
+    border-radius: 20pt;
     border-spacing: 10px;
-    padding: 20pt
-}
-
-table, td, th {
-    border: 1px solid rgb(17, 44, 17)
+    padding: 10pt
 }
 
 .page2, .page3, .page4, .page5 {
@@ -204,7 +207,7 @@ button {
     opacity: 0.8;
 }
 
-#load:disabled, #delete:disabled, #save:disabled, #reset:disabled, #next:disabled, #back:disabled{
+#load:disabled, #delete:disabled, #save:disabled, #reset:disabled, #next:disabled, #back:disabled {
     margin-right: 10px;
     background: #e6e6e6;
     border-bottom: #b1b1b1 3px solid;
@@ -218,4 +221,34 @@ button {
     font-size: 10px;
     font-weight: 600;
     opacity: .5;
+    cursor: not-allowed;
+}
+
+table#set-load-filter tr:first-child td:first-child, table#filter tr:first-child td:first-child {
+    border-top-left-radius: 10px;
+}
+
+table#set-load-filter tr:first-child td:last-child, table#filter tr:first-child td:last-child {
+    border-top-right-radius: 10px;
+}
+
+table#set-load-filter tr:last-child td:first-child, table#filter tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+table#set-load-filter tr:last-child td:last-child, table#filter tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+#results, #user {
+    color: #f5f7f7;
+    font-size: 12px;
+    text-indent: 4px;
+    line-height: 40px;
+    font-weight: 600;
+}
+
+#scroll-pages {
+    text-align: center;
+    margin-top: 14px;
 }
