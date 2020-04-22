@@ -97,9 +97,8 @@ h1 {
 .popup-content {
     height: 200px;
     width: 400px;
-    background-color: #162e00;
-    background-image: url("https://www.transparenttextures.com/patterns/3px-tile.png");
-    border: 2px solid rgb(253, 73, 253);
+    background-color: #e4edf8;
+    border: 2px solid #e0562b;
     padding: 20px;
     border-radius: 5px;
     position: relative;
@@ -111,14 +110,50 @@ input {
     display: block;
     width: 50%;
     padding: 8px;
+    cursor: text;
+}
+
+input[type=submit] {
+    cursor: pointer;
+    color: white;
+    background: #e94a22;
+    border-bottom: #c0421b 3px solid;
+    border-left: #c0421b 1px solid;
+    border-right: #c0421b 1px solid;
+    border-radius: 6px;
+    text-align: center;
+    padding: 10px;
+    float: center;
+    font-size: 10px;
+    font-weight: 800;
+    margin: 20px auto;
+    display: block;
+    width: 50%
+}
+
+input:hover {
+    opacity: .8;
 }
 
 .close {
+    color: white;
+    background: #e94a22;
+    border-bottom: #c0421b 3px solid;
+    border-left: #c0421b 1px solid;
+    border-right: #c0421b 1px solid;
+    border-radius: 6px;
+    text-align: center;
+    padding: 10px;
+    float: center;
+    font-size: 10px;
+    font-weight: 800;
     margin: 20px auto;
     display: block;
-    width: 50%;
-    padding: 8px;
-    border-radius: 5px;
+    width: 50%
+}
+
+.close:hover, input[type=submit]:hover {
+    opacity: .8;
 }
 
 th {
