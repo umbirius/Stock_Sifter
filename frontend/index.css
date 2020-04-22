@@ -1,15 +1,13 @@
 body {
     background-color: #162e00;
     background-image: url("https://www.transparenttextures.com/patterns/3px-tile.png");
-    font-family: 'Fjalla One';      
+    font-family: 'Fjalla One';
 }
 
 table#tickers {
     border-collapse: collapse;
     font-size: 12px;
     width: 100%;
-
-
 }
 
 table#tickers td, table#tickers th {
@@ -24,7 +22,6 @@ table#filter {
     border-collapse: collapse;
     font-size: 12px;
     width: 100%;
-
 }
 
 table#filter td, table#filter th {
@@ -39,7 +36,6 @@ table#set-load-filter {
     border-collapse: collapse;
     font-size: 12px;
     width: 100%;
-
 }
 
 table#set-load-filter td, table#set-load-filter th {
@@ -68,15 +64,14 @@ select#load-filter {
     font-size: 12px;
 }
 
-h1 { 
-    color: #ececcd; 
+h1 {
+    color: #ececcd;
     /* font-family: 'Raleway',sans-serif;  */
-    font-size: 40px; 
-    font-weight: 800; 
-    line-height: 72px; 
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 72px;
     margin: 0 0 24px;
-    text-align: center; 
-
+    text-align: center;
 }
 
 .popup-filter, .popup-user {
@@ -118,10 +113,11 @@ input {
     border-radius: 5px;
 }
 
-th{
+th {
     background-color: rgb(46, 63, 38);
     color: white
 }
+
 td {
     background-color: rgb(229, 240, 222);
 }
@@ -129,13 +125,11 @@ td {
 #tickers tbody tr:hover td {
     background-color: rgb(248, 253, 216);
     color: rgb(241, 64, 233);
-
-  }
+}
 
 #tickers tr:nth-child(odd) td {
     background: #f1f7eb;
 }
-
 
 button#log-in-or-sign-up {
     display: flex;
@@ -156,16 +150,60 @@ button#log-out {
     border-radius: 5pt;
     border-spacing: 10px;
     padding: 20pt
-    
-
 }
 
-table, td, th{
+table, td, th {
     border: 1px solid rgb(17, 44, 17)
 }
 
 .page2, .page3, .page4, .page5 {
     display: none;
+}
+
+button {
+    border-top: 0;
+    cursor: pointer;
+}
+
+#log-in-or-sign-up, #log-out{
+    margin-right: 10px;
+    width: 100px;
+    background: #e94a22;
+    border-bottom: #c0421b 3px solid;
+    border-left: #c0421b 1px solid;
+    border-right: #c0421b 1px solid;
+    border-radius: 6px;
+    text-align: center;
+    color: white;
+    padding: 10px;
+    float: center;
+    font-size: 8px;
+    font-weight: 800;
+}
+
+#log-in-or-sign-up:hover, #log-out:hover {
+    opacity: 0.8;
+}
+
+
+#load, #delete, #save, #reset, #next, #back{ 
+    margin-right: 10px;
+    /* width: 10%; */
+    background: #e94a22;
+    border-bottom: #c0421b 3px solid;
+    border-left: #c0421b 1px solid;
+    border-right: #c0421b 1px solid;
+    border-radius: 6px;
+    text-align: center;
+    color: white;
+    padding: 5px;
+    float: center;
+    font-size: 8px;
+    font-weight: 800;
+}
+
+#load:hover, #delete:hover, #save:hover, #reset:hover, #next:hover, #back:hover {
+    opacity: 0.8;
 }
 
 
