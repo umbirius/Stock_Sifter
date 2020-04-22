@@ -806,6 +806,8 @@ class User {
     save.disabled = true
     deleteBtn.disabled = true
     load.disabled = true
+    Filter.resetFilter()
+    renderTableRows(stocks)
   }
 
   loadFilters() {
