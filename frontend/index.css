@@ -25,6 +25,7 @@ table#filter {
     border-collapse: collapse;
     font-size: 12px;
     width: 100%;
+    font-weight: 600;
 }
 
 table#filter td, table#filter th {
@@ -39,6 +40,7 @@ table#set-load-filter {
     border-collapse: collapse;
     font-size: 12px;
     width: 100%;
+    font-weight: 600;
 }
 
 table#set-load-filter td, table#set-load-filter th {
@@ -56,10 +58,14 @@ tr {
 select {
     width: 80px;
     font-size: 12px;
+    /* background-color: rgb(243, 196, 184);
+    color: white; */
 }
 
 select:hover {
     cursor: pointer;
+    opacity: .8;
+    background-color: rgb(238, 137, 91);
 }
 
 option {
