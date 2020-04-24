@@ -8,7 +8,7 @@ Stock Sifter is an API to help a user screen through stocks based on their value
 
 1. fork and clone the repository
 
-2. Install the all relevant gems 
+2. Install all relevant gems 
 ```ruby 
 bundle install
 ```
