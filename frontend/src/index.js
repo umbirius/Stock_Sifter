@@ -1,7 +1,5 @@
-
 // Load DOM
 document.addEventListener('DOMContentLoaded', (event) => {
-  console.log('DOM fully loaded and parsed');
 
   save.disabled = true
   deleteBtn.disabled = true
@@ -10,7 +8,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   grabStocks();
   createTableHeader(stockTable)
 
-  reset.addEventListener("click", () => {
+  reset.addEventListener("click", (event) => {
     Filter.resetFilter()
     renderTableRows(stocks)
     let filters = document.getElementById("load-filter")
@@ -93,11 +91,12 @@ function createTableHeader(table) {
     row.appendChild(th);
   }
 }
-
-// Render by active Filter
-
+// render table rows
 function renderTableRows(stocks) {
+
+
   let tbody
+
   if (!!(document.querySelector("#tickers > tbody"))) {
     oldTbody = document.querySelector("#tickers > tbody")
     tbody = document.createElement("tbody")
@@ -125,14 +124,17 @@ function renderTableRows(stocks) {
       cell.appendChild(text);
     }
   }
-    let results = document.querySelector("#results")
-    results.innerHTML = `${document.querySelectorAll("#tickers > tbody > tr").length} Results`
-    let page = 1
-    let backBtn
-    let nextBtn
-    let pages = Math.ceil(document.querySelectorAll("#tickers > tbody > tr").length / 10)
+  let results = document.querySelector("#results")
+  results.innerHTML = `${document.querySelectorAll("#tickers > tbody > tr").length} Results`
+  let backBtn
+  let nextBtn
+  let page = 1
+  let pages = Math.ceil(document.querySelectorAll("#tickers > tbody > tr").length / 10)
 
-  if (!(document.getElementById('back')) && !(document.getElementById("next"))){
+
+
+
+  if (!(document.getElementById('back')) && !(document.getElementById("next"))) {
     let div = document.createElement('div')
     div.setAttribute("id", "scroll-pages")
     backBtn = document.createElement("button")
@@ -143,71 +145,67 @@ function renderTableRows(stocks) {
     nextBtn = document.createElement("button")
     nextBtn.setAttribute("id", "next")
     nextBtn.innerText = "Next Page"
-    document.querySelector("#ticker-section").appendChild(div)
+    document.querySelector("#ticker-section").appendChild(nextBtn)
     div.appendChild(nextBtn)
   } else {
     backBtn = document.getElementById('back')
     nextBtn = document.getElementById("next")
+
   }
-  
-    backBtn.disabled = true
-    nextBtn.disabled = false
 
-    if (pages <= 1) {
-      nextBtn.disabled = true
+  backBtn.disabled = true
+  nextBtn.disabled = false
+
+  if (pages <= 1) {
+    nextBtn.disabled = true
+  }
+
+
+  backBtn.addEventListener('click', () => {
+    if (page <= pages) {
+
+      let currentPage = document.querySelectorAll(`.page${page}`)
+      for (item of currentPage) {
+        item.style.display = "none"
+      }
+
+      let backPage = document.querySelectorAll(`.page${page - 1}`)
+      for (item of backPage) {
+        item.style.display = "table-row"
+      }
+      page--
     }
-  
-    backBtn.addEventListener('click', () => {
-      event.stopImmediatePropagation()
-      if (page <= pages) {
-  
-        let currentPage = document.querySelectorAll(`.page${page}`)
-        for (item of currentPage) {
-          item.style.display = "none"
-        }
-  
-        let backPage = document.querySelectorAll(`.page${page - 1}`)
-        for (item of backPage) {
-          item.style.display = "table-row"
-        }
-        page--
-      }
-      if (page == 1) {
-        backBtn.disabled = true
-      } else if (page < pages){
-        nextBtn.disabled = false
-      }
-      console.log(`${page} of ${pages}`)
+    if (page == 1) {
+      backBtn.disabled = true
+    } else if (page < pages) {
+      nextBtn.disabled = false
+    }
+    console.log(`${page} of ${pages}`)
+  })
 
-    })
-  
-    nextBtn.addEventListener('click', () => {
-      event.stopImmediatePropagation()
-      if (page < pages) {
-        let currentPage = document.querySelectorAll(`.page${page}`)
-        for (item of currentPage) {
-          item.style.display = "none"
-        }
-  
-        let nextPage = document.querySelectorAll(`.page${page + 1}`)
-        for (item of nextPage) {
-          item.style.display = "table-row"
-        }
-        page++
+  nextBtn.addEventListener('click', () => {
+    if (page < pages) {
+      let currentPage = document.querySelectorAll(`.page${page}`)
+      for (item of currentPage) {
+        item.style.display = "none"
       }
-      if (page == pages) {
-        nextBtn.disabled = true
-      } else if (page > 1) {
-        backBtn.disabled = false
-      }
-      console.log(`${page} of ${pages}`)
-    })
-  
 
+      let nextPage = document.querySelectorAll(`.page${page + 1}`)
+      for (item of nextPage) {
+        item.style.display = "table-row"
+      }
+      page++
+    }
+    if (page == pages) {
+      nextBtn.disabled = true
+    } else if (page > 1) {
+      backBtn.disabled = false
+    }
+    console.log(`${page} of ${pages}`)
+  })
 
 }
-
-
+// inital fetch to get stocks
 function grabStocks() {
   fetch('http://localhost:3000/stocks')
     .then((response) => {
@@ -228,345 +226,6 @@ function grabStocks() {
 }
 
 
-
-
-class Stock {
-  constructor(symbol, market_cap, sector, last_price, fiftytwo_high, fiftytwo_low,
-    vol, avg_vol, rel_vol, insider_own, inst_own) {
-    this.symbol = symbol;
-    this.market_cap = market_cap;
-    this.sector = sector;
-    this.last_price = last_price;
-    this.fiftytwo_high = fiftytwo_high;
-    this.fiftytwo_low = fiftytwo_low;
-    this.vol = vol;
-    this.avg_vol = avg_vol;
-    this.rel_vol = rel_vol;
-    this.insider_own = insider_own;
-    this.inst_own = inst_own;
-  }
-
-  static get allStocks() {
-    return stocks
-  }
-
-  static filterStocks(filterParams) {
-    let filter = filterParams
-    let filteredStocks = stocks
-    switch (filter.price) {
-      case "any":
-        break;
-
-      case "sub1":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price < 1)
-        break;
-
-      case "sub5":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price < 5)
-        break;
-
-      case "sub10":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price < 10)
-        break;
-
-      case "sub20":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price < 20)
-        break;
-
-      case "sub50":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price < 50)
-        break;
-
-      case "over1":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price > 1)
-        break;
-
-      case "over5":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price > 5)
-        break;
-
-      case "over10":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price > 10)
-        break;
-
-      case "over20":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price > 20)
-        break;
-
-      case "over50":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price > 50)
-        break;
-
-      case "1-to-5":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price >= 1 && stock.last_price < 5)
-        break;
-
-      case "5-to-10":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price >= 5 && stock.last_price < 10)
-        break;
-
-      case "10-to-20":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price >= 10 && stock.last_price < 20)
-        break;
-
-      case "20-to-50":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price >= 20 && stock.last_price < 50)
-        break;
-
-      case "50-to-100":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price >= 50 && stock.last_price < 100)
-        break;
-
-    }
-
-    switch (filter.volume) {
-      case "any":
-        break;
-
-      case "sub100k":
-        filteredStocks = filteredStocks.filter(stock => stock.vol < 100000)
-        break;
-
-      case "sub500k":
-        filteredStocks = filteredStocks.filter(stock => stock.vol < 500000)
-        break;
-
-      case "sub1m":
-        filteredStocks = filteredStocks.filter(stock => stock.vol < 1000000)
-        break;
-
-      case "over100k":
-        filteredStocks = filteredStocks.filter(stock => stock.vol > 100000)
-        break;
-
-      case "over500k":
-        filteredStocks = filteredStocks.filter(stock => stock.vol > 500000)
-        break;
-
-      case "over1m":
-        filteredStocks = filteredStocks.filter(stock => stock.vol > 1000000)
-        break;
-
-      case "over5m":
-        filteredStocks = filteredStocks.filter(stock => stock.vol > 5000000)
-        break;
-
-      case "over10m":
-        filteredStocks = filteredStocks.filter(stock => stock.vol > 10000000)
-        break;
-
-      case "over20m":
-        filteredStocks = filteredStocks.filter(stock => stock.vol > 20000000)
-        break;
-    }
-
-    switch (filter.avgVolume) {
-      case "any":
-        break;
-
-      case "sub100k":
-        filteredStocks = filteredStocks.filter(stock => stock.avg_vol < 100000)
-        break;
-
-      case "sub500k":
-        filteredStocks = filteredStocks.filter(stock => stock.avg_vol < 500000)
-        break;
-
-      case "sub1m":
-        filteredStocks = filteredStocks.filter(stock => stock.avg_vol < 1000000)
-        break;
-
-      case "over100k":
-        filteredStocks = filteredStocks.filter(stock => stock.avg_vol > 100000)
-        break;
-
-      case "over500k":
-        filteredStocks = filteredStocks.filter(stock => stock.avg_vol > 500000)
-        break;
-
-      case "over1m":
-        filteredStocks = filteredStocks.filter(stock => stock.avg_vol > 1000000)
-        break;
-
-      case "over5m":
-        filteredStocks = filteredStocks.filter(stock => stock.avg_vol > 5000000)
-        break;
-
-      case "over10m":
-        filteredStocks = filteredStocks.filter(stock => stock.avg_vol > 10000000)
-        break;
-
-      case "over20m":
-        filteredStocks = filteredStocks.filter(stock => stock.avg_vol > 20000000)
-        break;
-    }
-
-    switch (filter.relVolume) {
-      case "any":
-        break;
-
-      case "sub1":
-        filteredStocks = filteredStocks.filter(stock => stock.vol / stock.avg_vol < 1)
-        break;
-
-      case "sub.75":
-        filteredStocks = filteredStocks.filter(stock => stock.vol / stock.avg_vol < .75)
-        break;
-
-      case "sub.5":
-        filteredStocks = filteredStocks.filter(stock => stock.vol / stock.avg_vol < .5)
-        break;
-
-      case "sub.25":
-        filteredStocks = filteredStocks.filter(stock => stock.vol / stock.avg_vol < .25)
-        break;
-
-      case "over.25":
-        filteredStocks = filteredStocks.filter(stock => stock.vol / stock.avg_vol > .25)
-        break;
-
-      case "over.5":
-        filteredStocks = filteredStocks.filter(stock => stock.vol / stock.avg_vol > .5)
-        break;
-
-      case "over.75":
-        filteredStocks = filteredStocks.filter(stock => stock.vol / stock.avg_vol > .75)
-        break;
-
-      case "over1":
-        filteredStocks = filteredStocks.filter(stock => stock.vol / stock.avg_vol > 1)
-        break;
-
-      case "over2":
-        filteredStocks = filteredStocks.filter(stock => stock.vol / stock.avg_vol > 2)
-        break;
-
-      case "over5":
-        filteredStocks = filteredStocks.filter(stock => stock.vol / stock.avg_vol > 5)
-        break;
-
-      case "over10":
-        filteredStocks = filteredStocks.filter(stock => stock.vol / stock.avg_vol > 10)
-        break;
-
-    }
-
-    switch (filter.sector) {
-      case "any":
-        break;
-
-      case "basic-materials":
-        filteredStocks = filteredStocks.filter(stock => stock.sector === "Basic Materials")
-        break;
-
-      case "communications":
-        filteredStocks = filteredStocks.filter(stock => stock.sector === "Communications")
-        break;
-
-      case "consumer-disc":
-        filteredStocks = filteredStocks.filter(stock => stock.sector === "Consumer Discretionary")
-        break;
-
-      case "consumer-staples":
-        filteredStocks = filteredStocks.filter(stock => stock.sector === "Consumer Staples")
-        break;
-
-      case "energy":
-        filteredStocks = filteredStocks.filter(stock => stock.sector === "Energy")
-        break;
-
-      case "financial":
-        filteredStocks = filteredStocks.filter(stock => stock.sector === "Financial")
-        break;
-
-      case "healthcare":
-        filteredStocks = filteredStocks.filter(stock => stock.sector === "Healthcare")
-        break;
-
-      case "industrials":
-        filteredStocks = filteredStocks.filter(stock => stock.sector === "Industrials")
-        break;
-
-      case "IT":
-        filteredStocks = filteredStocks.filter(stock => stock.sector === "Information Technology")
-        break;
-
-      case "real-estate":
-        filteredStocks = filteredStocks.filter(stock => stock.sector === "Real Estate")
-        break;
-
-      case "utilities":
-        filteredStocks = filteredStocks.filter(stock => stock.sector === "Utilities")
-        break;
-
-    }
-
-    switch (filter.marketCap) {
-      case "any":
-        break;
-
-    }
-
-    switch (filter.fiftytwoWeekHigh) {
-
-      case "any":
-        break;
-
-      case "under5":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price <= stock.fiftytwo_high * .95)
-        break;
-
-      case "under20":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price <= stock.fiftytwo_high * .8)
-        break;
-
-      case "under50":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price <= stock.fiftytwo_high * .5)
-        break;
-
-      case "under90":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price <= stock.fiftytwo_high * .9)
-        break;
-
-    }
-
-    switch (filter.fiftytwoWeekLow) {
-
-      case "any":
-        break;
-
-      case "over5":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price >= stock.fiftytwo_low * 1.05)
-        break;
-
-      case "over20":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price >= stock.fiftytwo_low * 1.2)
-        break;
-
-      case "over50":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price >= stock.fiftytwo_low * 1.5)
-        break;
-
-      case "over90":
-        filteredStocks = filteredStocks.filter(stock => stock.last_price >= stock.fiftytwo_low * 1.9)
-        break;
-    }
-
-    switch (filter.insiderOwn) {
-      case "any":
-        break;
-    }
-
-    switch (filter.instOwn) {
-      case "any":
-        break;
-    }
-
-    return filteredStocks
-  }
-
-}
-
 // sorts stock ticker by symbol
 function alphaSymbol(a, b) {
 
@@ -581,267 +240,5 @@ function alphaSymbol(a, b) {
   }
   return comparison;
 }
-
-
-// Filter Class
-class Filter {
-  constructor(filter) {
-    this.id = filter.id;
-    this.name = filter.name;
-    this.price = filter.last_price;
-    this.volume = filter.vol;
-    this.avgVolume = filter.avg_vol;
-    this.relVolume = filter.rel_vol;
-    this.sector = filter.sector;
-    this.marketCap = filter.market_cap;
-    this.fiftytwoWeekHigh = filter.fiftytwo_high;
-    this.fiftytwoWeekLow = filter.fiftytwo_low;
-    this.insiderOwn = filter.insider_own;
-    this.instOwn = filter.inst_own;
-    this.userId = filter.user_id
-  }
-
-  // logs active filter values to pass as argument from Filter class
-  static filterParams() {
-    let searchIds = ['price', 'volume', 'avg-volume', 'rel-volume', 'sector',
-      'market-cap', '52-week-high', '52-week-low', 'insider-own', 'inst-own']
-    let params = []
-    for (let id of searchIds) {
-      params.push(document.getElementById(id).selectedOptions[0].value)
-      // console.log(id)
-    }
-    let formattedParams = new Object
-    formattedParams.price = params[0];
-    formattedParams.volume = params[1];
-    formattedParams.avgVolume = params[2];
-    formattedParams.relVolume = params[3];
-    formattedParams.sector = params[4];
-    formattedParams.marketCap = params[5];
-    formattedParams.fiftytwoWeekHigh = params[6];
-    formattedParams.fiftytwoWeekLow = params[7];
-    formattedParams.insiderOwn = params[8];
-    formattedParams.instOwn = params[9]
-    return formattedParams
-  }
-
-  static resetFilter() {
-    let searchIds = ['price', 'volume', 'avg-volume', 'rel-volume', 'sector',
-      'market-cap', '52-week-high', '52-week-low', 'insider-own', 'inst-own']
-    for (let id of searchIds) {
-      document.getElementById(id).value = "any"
-    }
-  }
-
-  static newfilter(id) {
-    let filterParams = Filter.filterParams()
-    let form = document.getElementById("create-filter")
-    document.querySelector(".popup-filter").style.display = "flex";
-
-    document.querySelector("#close-filter").addEventListener("click", () => {
-      document.querySelector(".popup-filter").style.display = "none";
-    })
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault()
-      e.stopImmediatePropagation()
-
-      fetch('http://localhost:3000/filters', {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify(
-          {
-            filter: {
-              name: e.target.elements[0].value,
-              market_cap: filterParams.marketCap,
-              sector: filterParams.sector,
-              last_price: filterParams.price,
-              fiftytwo_high: filterParams.fiftytwoWeekHigh,
-              fiftytwo_low: filterParams.fiftytwoWeekLow,
-              vol: filterParams.volume,
-              avg_vol: filterParams.avgVolume,
-              rel_vol: filterParams.relVolume,
-              insider_own: filterParams.insiderOwn,
-              inst_own: filterParams.insiderOwn,
-              user_id: id
-            }
-          }
-        )
-      })
-        .then(response => response.json())
-        .then(function (json) {
-          console.log(json)
-          let newFilter = new Filter(json)
-          form.reset()
-          newFilter.appendFilter()
-          document.querySelector(".popup-filter").style.display = "none";
-        })
-
-    })
-  }
-
-  appendFilter() {
-    let filters = document.getElementById("load-filter")
-    let option = document.createElement("option")
-    option.text = this.name
-    option.value = this.name.replace(/\s/g, '-')
-    option.setAttribute("id", this.id)
-    filters.appendChild(option)
-    filters.value = option.value
-
-  }
-
-  static loadFilter(id) {
-    fetch('http://localhost:3000/filters')
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        let filterVals = data.data.find(filter => filter.attributes.id == id).attributes
-        document.getElementById("market-cap").value = filterVals.market_cap
-        document.getElementById("sector").value = filterVals.sector
-        document.getElementById("price").value = filterVals.last_price
-        document.getElementById("52-week-high").value = filterVals.fiftytwo_high
-        document.getElementById("52-week-low").value = filterVals.fiftytwo_low
-        document.getElementById("volume").value = filterVals.vol
-        document.getElementById("avg-volume").value = filterVals.avg_vol
-        document.getElementById("rel-volume").value = filterVals.rel_vol
-        document.getElementById("insider-own").value = filterVals.insider_own
-        document.getElementById("inst-own").value = filterVals.inst_own
-      })
-      .then(() => {
-        renderTableRows(Stock.filterStocks(Filter.filterParams()))
-      });
-  }
-
-  static deleteFilter() {
-    let loadOptions = document.querySelector("#load-filter");
-
-    fetch(`http://localhost:3000/filters/${loadOptions.selectedOptions[0].id}`, {
-      method: "DELETE"
-    })
-    loadOptions.remove(loadOptions.selectedIndex);
-  }
-
-}
-
-class User {
-  constructor(user) {
-    this.name = user.name
-    this.id = user.id
-  }
-
-  static setCurrentUser(user) {
-    currentUser = user
-  }
-
-  static currentUser() {
-    return currentUser
-  }
-
-  static createOrAccessUser() {
-    let form = document.getElementById("user-sign-up-log-in")
-    document.querySelector(".popup-user").style.display = "flex";
-
-    document.querySelector(".close").addEventListener("click", () => {
-      document.querySelector(".popup-user").style.display = "none";
-    })
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault()
-      e.stopImmediatePropagation()
-      fetch('http://localhost:3000/users', {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify(
-          {
-            user: {
-              name: e.target.elements[0].value
-            }
-          }
-        )
-      })
-        .then(response => {
-          return response.json()
-        })
-        .then(user => {
-          let newUser = new User(user)
-          User.setCurrentUser(newUser)
-          newUser.loadFilters()
-          console.log(newUser)
-          console.log(user)
-          logInOrSignUp.style.display = "none";
-          document.querySelector(".popup-user").style.display = "none";
-          logOut.style.display = "flex"
-          load.disabled = false 
-          save.disabled = false
-          deleteBtn.disabled = false
-        })
-        .then(() => {
-          let div = document.querySelector("#user")
-          div.innerHTML = `  Current User: ${currentUser.name}`
-          form.reset()
-        })
-
-    })
-
-
-
-
-  }
-
-  static logOut() {
-    let div = document.querySelector("#user")
-    div.innerHTML = ""
-    currentUser = undefined
-    logInOrSignUp.style.display = "flex";
-    logOut.style.display = "none"
-    let loadOptions = document.querySelector("#load-filter")
-    loadOptions.options.length = 0
-    let option = document.createElement("option")
-    loadOptions.appendChild(option)
-    option.value = "none"
-    option.text = "None"
-    save.disabled = true
-    deleteBtn.disabled = true
-    load.disabled = true
-    Filter.resetFilter()
-    renderTableRows(stocks)
-  }
-
-  loadFilters() {
-    fetch('http://localhost:3000/filters')
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        let filterSelection = document.getElementById("load-filter")
-        let userFilters = data.data.filter(filter => filter.attributes.user_id === this.id)
-        for (let filter of userFilters) {
-          let option = document.createElement("option")
-          option.value = filter.attributes.name
-          option.text = filter.attributes.name
-          option.setAttribute("id", filter.attributes.id)
-          filterSelection.appendChild(option)
-
-        }
-        filterSelection.value = "none"
-      })
-  }
-}
-
-
-
-// Reset Filter 
-
-
-
-
-
 
 

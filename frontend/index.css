@@ -65,7 +65,7 @@ select {
 select:hover {
     cursor: pointer;
     opacity: .8;
-    background-color: rgb(238, 137, 91);
+    background-color: rgb(241, 174, 143);
 }
 
 option {
@@ -167,11 +167,11 @@ th {
 }
 
 td {
-    background-color: #f6fafa;
+    background-color: #f6f8f8;
 }
 
 #tickers tbody tr:hover td {
-    background-color: #e7f3f3;
+    background-color: #eeeeee;
     color: rgb(248, 87, 38);
 }
 
