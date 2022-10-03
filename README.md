@@ -4,6 +4,7 @@
 
 Stock Sifter is an API designed to help a user screen stocks based on their values of interest. The user would then be able to save thier filter settings and load them at a later date to find new prospective stock plays based on an ever changing market.
 
+
 ## Getting Started
 
 1. fork and clone the repository
